@@ -1,4 +1,4 @@
-import LogoutForm from "../features/auth/logout-form";
+import LogoutForm from "../features/auth/components/logout-form";
 
 
 const LogoutPage = () => {

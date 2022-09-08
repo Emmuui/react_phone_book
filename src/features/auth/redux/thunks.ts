@@ -10,6 +10,7 @@ export const fetchUser = createAsyncThunk<string, {email: string, password: stri
     async function(data, thunkAPI) {
         try {
             await delay(1000);
+            localStorage.setItem('email', data.email)
             return data.email;
         } catch (error) {
             return thunkAPI.rejectWithValue(error);

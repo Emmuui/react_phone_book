@@ -1,14 +1,13 @@
-import {Link, useNavigate} from 'react-router-dom';
-import React, { ReactElement, useState, useEffect } from 'react';
+import {Link} from 'react-router-dom';
+import React, { ReactElement, useState } from 'react';
 import styles from './styles.module.scss';
-import {useAppDispatch, useAppSelector} from "../../../store";
-import {fetchUser} from "../redux/thunks";
+import {useAppDispatch} from "../../../../store";
+import {fetchUser} from "../../redux/thunks";
 
 
 const LoginForm = (): ReactElement => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate()
     const dispatch = useAppDispatch();
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -18,12 +17,6 @@ const LoginForm = (): ReactElement => {
             password: password,
         }));
     }
-
-    const loggedIn = useAppSelector(state => state.auth.loggedIn);
-
-    useEffect(() => {
-        if (loggedIn) navigate('/home');
-    }, []);
 
     return (
         <div className={styles.login}>

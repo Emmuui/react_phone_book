@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {selectUser} from "../redux/user-slice";
-import {logout} from "../redux/user-slice";
+import {selectUser} from "../../redux/user-slice";
+import {logout} from "../../redux/user-slice";
 import styles from './styles.module.scss';
 
 const LogoutForm = (): ReactElement => {

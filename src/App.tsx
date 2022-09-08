@@ -1,24 +1,37 @@
-import React from 'react';
-import {Routes, Route, Navigate, Outlet} from 'react-router-dom'
+import React, {useEffect} from 'react';
+import {Routes, Route, Navigate} from 'react-router-dom'
 import HomePage from './pages/home';
 import LoginPage from './pages/login';
-import LogoutPage from './pages/logout';
-import {selectUser} from "./features/auth/redux/user-slice";
-import {useSelector} from "react-redux";
-import {PrivateRoute} from "./pages/PrivateRoute";
-
+import {PrivateRoute} from "./routes/private-route";
+import {PublicRoute} from "./routes/public-route";
+import {login} from "./features/auth/redux/user-slice";
+import {useAppDispatch} from "./store";
+import LogoutPage from "./pages/logout";
 
 
 
 function App() {
-  return (
+
+    const email = localStorage.getItem('email')
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+            if (email) dispatch(login({email}));
+    }, []);
+
+    return (
       <Routes>
-          <Route path="/home" element={
-                  <PrivateRoute>
-                      <HomePage />
-                  </PrivateRoute>
+          <Route path="/" element={
+              <PrivateRoute>
+                  <HomePage />
+              </PrivateRoute>
           }/>
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+          } />
+          <Route path="*" element={<Navigate to="/" />} />
       </Routes>
   );
 }
