@@ -1,26 +1,29 @@
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import React, { ReactElement, useState, useEffect } from 'react';
 import styles from './styles.module.scss';
-import {useDispatch} from "react-redux";
-import {login} from "../redux/user-slice";
+import {useAppDispatch, useAppSelector} from "../../../store";
+import {fetchUser} from "../redux/thunks";
 
 
 const LoginForm = (): ReactElement => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const dispatch = useDispatch();
-
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch();
     const handleSubmit = (e: any) => {
         e.preventDefault();
 
-        dispatch(login({
+        dispatch(fetchUser({
             email: email,
             password: password,
-            loggedIn: true
         }));
     }
 
+    const loggedIn = useAppSelector(state => state.auth.loggedIn);
+
+    useEffect(() => {
+        if (loggedIn) navigate('/home');
+    }, []);
 
     return (
         <div className={styles.login}>
@@ -41,7 +44,7 @@ const LoginForm = (): ReactElement => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit" className={styles.submit__btn}>Submit</button>
-                <p className={styles.home_page}>Or <Link to="/">return to home page</Link></p>
+                <p className={styles.home_page}>Or <Link to="/home">return to home page</Link></p>
             </form>
         </div>
     )

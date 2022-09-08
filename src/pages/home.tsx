@@ -1,10 +1,7 @@
-import { Navigate } from 'react-router-dom';
-import {useSelector} from "react-redux";
-import {selectUser} from "../features/auth/redux/user-slice";
+import {ReactElement} from "react";
 
 
-const HomePage = () => {
-    const user = useSelector(selectUser);
+const HomePage = (): ReactElement => {
 
     return(
         <h1>Hello</h1>
