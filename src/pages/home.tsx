@@ -1,11 +1,7 @@
-import {ReactElement} from "react";
-
+import { ReactElement } from 'react';
 
 const HomePage = (): ReactElement => {
-
-    return(
-        <h1>Hello</h1>
-    )
-}
+  return <h1>Hello</h1>;
+};
 
 export default HomePage;

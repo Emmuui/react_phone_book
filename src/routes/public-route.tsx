@@ -1,20 +1,19 @@
-import React, {ReactElement} from 'react';
-import {useAppSelector} from "../store";
-import {Navigate, Outlet} from "react-router-dom";
+import React, { ReactElement } from 'react';
+import { useAppSelector } from '../store';
+import { Navigate, Outlet } from 'react-router-dom';
 
 type Props = {
-    children?: ReactElement
-}
+  children?: ReactElement;
+};
 
-const PublicRoute: React.FC<Props> = ({children}) =>{
-    const isLoggedIn = useAppSelector(state => state.auth.loggedIn);
+const PublicRoute: React.FC<Props> = ({ children }) => {
+  const isLoggedIn = useAppSelector(state => state.auth.loggedIn);
 
-    if (isLoggedIn) {
-        return <Navigate to="/home"/>
-    }
+  if (isLoggedIn) {
+    return <Navigate to="/" />;
+  }
 
-    return children ? children: <Outlet/>;
-}
-
+  return children ? children : <Outlet />;
+};
 
 export { PublicRoute };

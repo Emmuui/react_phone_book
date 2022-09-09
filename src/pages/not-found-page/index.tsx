@@ -2,7 +2,6 @@ import styles from './styles.module.scss';
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-
 const NotFound = () => {
   return (
     <div className={styles.not_found__div}>
@@ -11,7 +10,6 @@ const NotFound = () => {
       </p>
     </div>
   );
-}
-
+};
 
 export default NotFound;

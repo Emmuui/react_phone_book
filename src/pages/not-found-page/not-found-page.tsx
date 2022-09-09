@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
+import NotFound from './index';
 
 const NotFoundPage = (): ReactElement => {
   return (
     <div>
-
+      <NotFound />
     </div>
   );
 };

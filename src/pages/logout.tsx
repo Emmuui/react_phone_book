@@ -1,12 +1,11 @@
-import LogoutForm from "../features/auth/components/logout-form";
-
+import LogoutForm from '../features/auth/components/logout-form';
 
 const LogoutPage = () => {
-   return (
-       <div>
-           <LogoutForm/>
-       </div>
-   )
-}
+  return (
+    <div>
+      <LogoutForm />
+    </div>
+  );
+};
 
 export default LogoutPage;
