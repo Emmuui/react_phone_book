@@ -14,7 +14,7 @@ const LogoutForm = (): ReactElement => {
   };
   return (
     <div>
-      <h1 className={styles.name}>Hello {user.email}</h1>
+      <h1 className={styles.name}>Hello {user.user}</h1>
       <button className={styles.logout__button_form} onClick={e => handleLogout(e)}></button>
     </div>
   );

@@ -1,15 +1,15 @@
 import React, { ReactElement } from 'react';
-import { useAppSelector } from '../store';
 import { Navigate, Outlet } from 'react-router-dom';
+import useAuth from '../features/auth/hooks/use-auth';
 
 type Props = {
   children?: ReactElement;
 };
 
 const PublicRoute: React.FC<Props> = ({ children }) => {
-  const isLoggedIn = useAppSelector(state => state.auth.loggedIn);
+  const { loggedIn } = useAuth();
 
-  if (isLoggedIn) {
+  if (loggedIn) {
     return <Navigate to="/" />;
   }
 

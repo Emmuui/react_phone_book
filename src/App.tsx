@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/home';
 import LoginPage from './pages/login';
 import { PrivateRoute } from './routes/private-route';
 import { PublicRoute } from './routes/public-route';
-import { login } from './features/auth/redux/user-slice';
-import { useAppDispatch } from './store';
-import NotFoundPage from './pages/not-found-page/not-found-page';
+import NotFoundPage from './pages/not-found-page';
 import LogoutPage from './pages/logout';
+import useAuth from './features/auth/hooks/use-auth';
 
 function App() {
-  const email = localStorage.getItem('email');
-  const dispatch = useAppDispatch();
+  const {onTokenLogin} = useAuth();
 
   useEffect(() => {
-    if (email) dispatch(login({ email }));
-  }, []);
+    onTokenLogin();
+  }, [onTokenLogin]);
 
   return (
     <Routes>

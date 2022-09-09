@@ -1,25 +1,16 @@
 import { Link } from 'react-router-dom';
 import React, { ReactElement, useState } from 'react';
 import styles from './styles.module.scss';
-import { useAppDispatch, useAppSelector } from '../../../../store';
-import { fetchUser } from '../../redux/thunks';
+import useAuth from '../../hooks/use-auth';
 
 const LoginForm = (): ReactElement => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useAppDispatch();
-  const handleSubmit = (e: any) => {
+  const {onLogin, isLoading} = useAuth();
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    dispatch(
-      fetchUser({
-        email: email,
-        password: password,
-      })
-    );
+    onLogin({ email: email, password: password, });
   };
-  const isLoading = useAppSelector(state => state.auth.isLoading);
-
   return (
     <div className={styles.login}>
       <form className={styles.login__form} onSubmit={e => handleSubmit(e)}>

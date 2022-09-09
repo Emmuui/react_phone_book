@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchUser } from './thunks';
+import { RootState } from '../../../store';
 
 export const userSlice = createSlice({
   name: 'user',
@@ -25,7 +26,7 @@ export const userSlice = createSlice({
       state.loggedIn = true;
       state.isLoading = false;
     });
-    builder.addCase(fetchUser.pending, (state, action) => {
+    builder.addCase(fetchUser.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(fetchUser.rejected, (state, action) => {
@@ -36,4 +37,4 @@ export const userSlice = createSlice({
 });
 
 export const { login, logout } = userSlice.actions;
-export const selectUser = (state: any) => state.user.user;
+export const selectUser = (state: RootState) => state.auth;

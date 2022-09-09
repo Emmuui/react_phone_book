@@ -4,7 +4,9 @@ function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const fetchUser = createAsyncThunk<string, { email: string; password: string }>(
+export type LoginParams = { email: string; password: string }
+
+export const fetchUser = createAsyncThunk<string, LoginParams>(
   'user/fetchUser',
   async function (data, thunkAPI) {
     try {
