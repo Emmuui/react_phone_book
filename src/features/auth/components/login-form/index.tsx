@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React, { ReactElement, useState } from 'react';
 import styles from './styles.module.scss';
-import { useAppDispatch } from '../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 import { fetchUser } from '../../redux/thunks';
 
 const LoginForm = (): ReactElement => {
@@ -18,6 +18,7 @@ const LoginForm = (): ReactElement => {
       })
     );
   };
+  const isLoading = useAppSelector(state => state.auth.isLoading);
 
   return (
     <div className={styles.login}>
@@ -37,11 +38,11 @@ const LoginForm = (): ReactElement => {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <button type="submit" className={styles.submit__btn}>
-          Submit
+        <button disabled={isLoading} type="submit" className={styles.submit__btn}>
+          {isLoading ? 'Loading' : 'Submit'}
         </button>
         <p className={styles.home_page}>
-          Or <Link to="/home">return to home page</Link>
+          Or <Link to="/">return to home page</Link>
         </p>
       </form>
     </div>
