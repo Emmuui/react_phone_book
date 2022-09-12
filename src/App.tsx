@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/home';
+import HomePage from './pages/home/home';
 import LoginPage from './pages/login';
 import { PrivateRoute } from './routes/private-route';
 import { PublicRoute } from './routes/public-route';
 import NotFoundPage from './pages/not-found-page';
 import LogoutPage from './pages/logout';
 import useAuth from './features/auth/hooks/use-auth';
+import Layout from './features/layout/layout';
 
 function App() {
-  const {onTokenLogin} = useAuth();
+  const { onTokenLogin } = useAuth();
 
   useEffect(() => {
     onTokenLogin();
@@ -21,7 +22,9 @@ function App() {
         path="/"
         element={
           <PrivateRoute>
-            <HomePage />
+            <Layout>
+              <HomePage />
+            </Layout>
           </PrivateRoute>
         }
       />
@@ -29,7 +32,9 @@ function App() {
         path="/logout"
         element={
           <PrivateRoute>
-            <LogoutPage />
+            <Layout>
+              <LogoutPage />
+            </Layout>
           </PrivateRoute>
         }
       />
