@@ -25,7 +25,6 @@ const useAuth = () => {
     onTokenLogin,
     onLogout,
   }
-
 }
 
 export default useAuth;
