@@ -28,13 +28,16 @@ function App() {
           </PrivateRoute>
         }
       />
-      <Route path="/:id" element={
+      <Route
+        path="/contacts/:id"
+        element={
           <PrivateRoute>
-              <Layout>
-                  <DetailView />
-              </Layout>
+            <Layout>
+              <DetailView />
+            </Layout>
           </PrivateRoute>
-      } />
+        }
+      />
       <Route
         path="/login"
         element={

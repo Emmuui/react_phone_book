@@ -1,42 +1,32 @@
 import React, { ReactElement } from 'react';
 import { useAppSelector } from 'src/store';
-import { useNavigate } from 'react-router-dom';
 import styles from 'src/features/contact/components/contact-list/styles.module.scss';
+import { PhoneContactInterface } from '../../ts/contact';
 
-export const DetailViewForm = () => {
-  interface PhoneContactList {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-  }
 
-  const PhoneContactList: React.FC<PhoneContactList> = ({ id,name, phone, email }) => {
+
+export const ContactListForm = () => {
+  const contacts = useAppSelector(state => state.contacts.contacts);
+  const PhoneContactList = ({
+    configuration,
+  }: {
+    configuration: PhoneContactInterface;
+  }): ReactElement => {
     return (
-        <button className={styles.contact__info}>
-          <p className={styles.contact__text}>{name}</p>
-          <p className={styles.contact__text}>{phone}</p>
-          <p className={styles.contact__text}>{email}</p>
-        </button>
+      <button className={styles.contact__info}>
+        <p className={styles.contact__text}>{configuration.name.first}</p>
+        <p className={styles.contact__text}>{configuration.phone}</p>
+        <p className={styles.contact__text}>{configuration.email}</p>
+      </button>
     );
   };
-
-  const contacts = useAppSelector(state => state.contacts.contacts);
   return (
-      <div className={styles.contact__main_div}>
-        {contacts.map((data, key) => {
-          return (
-              <div key={key}>
-                <PhoneContactList
-                    key={key}
-                    id={data.id}
-                    name={data.name.first}
-                    phone={data.phone}
-                    email={data.email}
-                />
-              </div>
-          );
-        })}
-      </div>
+    <div className={styles.contact__main_div}>
+      {contacts?.map(data => {
+        return <PhoneContactList key={data.id} configuration={data} />;
+      })}
+    </div>
   );
 };
+
+export default ContactListForm;

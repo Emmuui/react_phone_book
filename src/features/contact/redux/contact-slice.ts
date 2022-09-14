@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ContactInitialState, PhoneContactInterface } from '../ts/contact';
 import { FetchContacts } from './thunks';
+import {fetchUser} from "../../auth/redux/thunks";
 
 
 const INITIAL_STATE: ContactInitialState = {
-  contacts: [],
+  contacts: null,
+  error: null,
   isLoading: false,
-  errors: null,
 };
 
 export const contactSlice = createSlice({
@@ -17,7 +18,7 @@ export const contactSlice = createSlice({
       return {
         ...state,
         isLoading: false,
-        errors: null
+        error: null
       };
     },
   },
@@ -29,6 +30,10 @@ export const contactSlice = createSlice({
       state.isLoading = false;
       state.contacts = action.payload;
     });
+    // builder.addCase(FetchContacts.rejected, (state, action) => {
+    //   state.isLoading = false;
+    //   state.error = action.error.message;
+    // });
   },
 });
 

@@ -1,13 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { PhoneContactInterface } from '../ts/contact';
 
-export const FetchContacts = createAsyncThunk<PhoneContactInterface[], PhoneContactInterface[]>(
+export const FetchContacts = createAsyncThunk<PhoneContactInterface[], void>(
   'contacts/getContacts',
-  async function (data, thunkAPI) {
+  async function (_, thunkAPI) {
     try {
-      await fetch('../ts/phones.json')
-        .then(data => data.json())
-      return data;
+        const res = await fetch('./phones.json')
+        return await res.json()
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

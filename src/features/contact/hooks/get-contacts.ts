@@ -1,6 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../../../store';
+import { useAppDispatch, useAppSelector } from 'src/store';
 import { useCallback } from 'react';
-import { PhoneContactInterface } from '../ts/contact';
 import { FetchContacts } from '../redux/thunks';
 
 const getContactsHook = () => {
@@ -8,7 +7,7 @@ const getContactsHook = () => {
   const contacts = useAppSelector(state => state.contacts);
 
   const getListContact = useCallback(
-    (data: PhoneContactInterface[]) => dispatch(FetchContacts(data)),
+    () => dispatch(FetchContacts()),
     [dispatch]
   );
 
