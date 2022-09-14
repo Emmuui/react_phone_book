@@ -5,9 +5,9 @@ import LoginPage from './pages/login';
 import { PrivateRoute } from './routes/private-route';
 import { PublicRoute } from './routes/public-route';
 import NotFoundPage from './pages/not-found-page';
-import LogoutPage from './pages/logout';
 import useAuth from './features/auth/hooks/use-auth';
-import Layout from './features/layout/layout';
+import Layout from './shared/layout/layout';
+import DetailView from "./pages/detail_view";
 
 function App() {
   const { onTokenLogin } = useAuth();
@@ -28,16 +28,13 @@ function App() {
           </PrivateRoute>
         }
       />
-      <Route
-        path="/logout"
-        element={
+      <Route path="/:id" element={
           <PrivateRoute>
-            <Layout>
-              <LogoutPage />
-            </Layout>
+              <Layout>
+                  <DetailView />
+              </Layout>
           </PrivateRoute>
-        }
-      />
+      } />
       <Route
         path="/login"
         element={

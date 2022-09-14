@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styles from './styles.module.scss';
-import LogoutForm from '../../auth/components/logout-form';
+import LogoutForm from '../../../features/auth/components/logout-form';
 
 const Header = (): ReactElement => {
   return (
