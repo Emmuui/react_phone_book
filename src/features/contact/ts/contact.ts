@@ -1,8 +1,7 @@
-export type ErrorsFromBackendType = Record<string, Array<string> | string | any>;
-
 export type ContactInitialState = {
     contacts: Array<PhoneContactInterface> | null;
-    error: ErrorsFromBackendType | null;
+    current_contact: PhoneContactInterface | null;
+    error: null | undefined | string;
     isLoading: boolean;
 };
 

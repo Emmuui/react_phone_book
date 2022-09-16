@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import NotFound from './not-found-page';
+import NotFound from '../shared/not-found-page';
 
 const NotFoundPage = (): ReactElement => {
   return (

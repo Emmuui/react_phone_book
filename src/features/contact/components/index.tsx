@@ -1,15 +1,20 @@
-import ContactListForm from './contact-list/contact-list';
-import getContactsHook from "../hooks/get-contacts";
-import {useEffect} from "react";
+import ContactListForm from './home';
+import getContactsHook from '../hooks/get-list-contacts';
+import { useEffect } from 'react';
+import { Loader } from 'src/shared/components/loader';
 
 export const Contacts = () => {
-  const {getListContact, contacts, isLoading, error} = getContactsHook()
+  const { getListContact, contacts, isLoading, error } = getContactsHook();
 
   useEffect(() => {
     if (!contacts && !isLoading && !error) {
       getListContact();
     }
   }, [getListContact, contacts, isLoading, error]);
-
-  return <ContactListForm />;
+  if (isLoading) {
+    return <Loader />;
+  }
+  else {
+    return <ContactListForm />;
+  }
 };

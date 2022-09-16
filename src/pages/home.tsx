@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
-import {Contacts} from "src/features/contact/components";
+import {Contacts} from "../features/contact/components";
+
 
 const HomePage = (): ReactElement => {
   return (
