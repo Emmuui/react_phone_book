@@ -1,10 +1,16 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import { useAppSelector } from 'src/store';
+import { useNavigate } from 'react-router-dom';
 
 
 export const ContactDetailForm = () => {
   const current_contact = useAppSelector(state => state.contacts.current_contact);
+  const navigate = useNavigate();
+  const routeChange = () =>{
+    const path = `/`;
+    navigate(path);
+  }
 
   return (
     <div>
@@ -29,6 +35,11 @@ export const ContactDetailForm = () => {
           <p className="contact__text_right">{current_contact?.address}</p>
           <p className="contact__text_right">{current_contact?.registered}</p>
         </div>
+      </div>
+      <div className={styles.contact__button_div}>
+        <button className={styles.contact__button_back} onClick={routeChange}>
+          Back
+        </button>
       </div>
     </div>
   );

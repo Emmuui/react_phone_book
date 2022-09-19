@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ContactInitialState, PhoneContactInterface } from '../ts/contact';
-import { FetchContacts } from '../api/contact-list-thunks';
-import { FetchDetailContact } from '../api/contact-detail-thunks';
+import { FetchContacts } from './thunks';
+import { FetchDetailContact } from './thunks';
 
 const INITIAL_STATE: ContactInitialState = {
   contacts: null,
@@ -10,7 +10,7 @@ const INITIAL_STATE: ContactInitialState = {
   isLoading: false,
 };
 
-export const contactListSlice = createSlice({
+export const contactViewSlice = createSlice({
   name: 'contacts',
   initialState: INITIAL_STATE,
   reducers: {
@@ -19,19 +19,6 @@ export const contactListSlice = createSlice({
         ...state,
         isLoading: false,
         error: null,
-      };
-    },
-    getCurrentContact: (state, action: PayloadAction<Array<PhoneContactInterface>>) => {
-      const currentContact = action.payload.find(
-        current_contact => current_contact.id === state.current_contact?.id
-      );
-      return {
-        ...state,
-        current_contact: currentContact
-          ? ({
-              ...state.current_contact,
-            } as PhoneContactInterface)
-          : state.current_contact,
       };
     },
   },
@@ -64,6 +51,6 @@ export const contactListSlice = createSlice({
   },
 });
 
-export const { getContactList } = contactListSlice.actions;
+export const { getContactList } = contactViewSlice.actions;
 
-export default contactListSlice.reducer;
+export default contactViewSlice.reducer;

@@ -2,7 +2,8 @@ import React, { ReactElement } from 'react';
 import { useAppSelector } from 'src/store';
 import styles from 'src/features/contact/components/home/styles.module.scss';
 import { PhoneContactInterface } from '../../ts/contact';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import getDetailContactHook from "../../hooks/get-detail-contact";
 
 export const ContactListForm = () => {
   const contacts = useAppSelector(state => state.contacts.contacts);
@@ -11,12 +12,14 @@ export const ContactListForm = () => {
   }: {
     configuration: PhoneContactInterface;
   }): ReactElement => {
-    const buttonHandle = () => {
-      console.log(configuration.id)
-      return <Link to='contact/'/>;
-    };
+    const { getDetailContact } = getDetailContactHook();
+    const navigate = useNavigate();
+    const routeChange = () =>{
+      const path = `/contact/${configuration.id}`;
+      navigate(path);
+    }
     return (
-      <button className={styles.contact__info} onClick={buttonHandle}>
+      <button className={styles.contact__info} onClick={routeChange}>
         <p className={styles.contact__text}>{configuration.name.first}</p>
         <p className={styles.contact__text}>{configuration.phone}</p>
         <p className={styles.contact__text}>{configuration.email}</p>

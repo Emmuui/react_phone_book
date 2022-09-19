@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from 'src/store';
 import { useCallback } from 'react';
-import { FetchContacts } from '../api/contact-list-thunks';
+import { FetchContacts } from '../redux/thunks';
 
 const getContactsHook = () => {
   const dispatch = useAppDispatch();

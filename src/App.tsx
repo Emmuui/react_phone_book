@@ -8,7 +8,7 @@ import NotFoundPage from './pages/not-found-page';
 import useAuth from './features/auth/hooks/use-auth';
 import Layout from './shared/layout/layout';
 import DetailView from './pages/contact-detail';
-import getContactsHook from './features/contact/hooks/get-list-contacts';
+import CreateView from "./pages/create-contact";
 
 function App() {
   const { onTokenLogin } = useAuth();
@@ -19,6 +19,14 @@ function App() {
 
   return (
     <Routes>
+      <Route
+        path="/add"
+        element={
+          <Layout>
+            <CreateView />
+          </Layout>
+        }
+      />
       <Route
         path="/contact/:id"
         element={
