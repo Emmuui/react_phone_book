@@ -14,7 +14,5 @@ export const DetailContact = () => {
             getDetailContact(id);
         }
     }, [getDetailContact, current_contact, isLoading, error, id]);
-
-
     return <ContactDetailForm />;
 };

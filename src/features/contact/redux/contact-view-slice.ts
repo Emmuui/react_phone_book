@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ContactInitialState, PhoneContactInterface } from '../ts/contact';
-import { FetchContacts } from './thunks';
+import { FetchContacts} from './thunks';
 import { FetchDetailContact } from './thunks';
+import {CreateContactThunk} from './thunks';
 
 const INITIAL_STATE: ContactInitialState = {
   contacts: null,
@@ -37,6 +38,7 @@ export const contactViewSlice = createSlice({
       state.isLoading = false;
       state.error = action.error.message;
     });
+
     builder.addCase(FetchDetailContact.pending, state => {
       state.isLoading = true;
     });
@@ -45,6 +47,18 @@ export const contactViewSlice = createSlice({
       state.current_contact = action.payload;
     });
     builder.addCase(FetchDetailContact.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(CreateContactThunk.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(CreateContactThunk.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.current_contact = action.payload;
+    });
+    builder.addCase(CreateContactThunk.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
     });

@@ -29,12 +29,14 @@ const LoginForm = (): ReactElement => {
           placeholder="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          required
         />
         <input
           className={styles.login_form__input}
           type="password"
           placeholder="password"
           {...register("exampleRequired", { required: true })}
+          required
           value={password}
           onChange={e => setPassword(e.target.value)}
         />

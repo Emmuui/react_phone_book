@@ -2,6 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { PhoneContactInterface } from '../ts/contact';
 import {RootState} from "src/store";
 
+
+function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 export const FetchContacts = createAsyncThunk<PhoneContactInterface[], void>(
   'contacts/FetchContacts',
   async function (_, thunkAPI) {
@@ -23,6 +29,20 @@ export const FetchDetailContact = createAsyncThunk<
         const res = await fetch('/phones.json')
         const data: PhoneContactInterface[] = await res.json()
         return data.find(contact => contact.id == contactId) as PhoneContactInterface;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+    }
+});
+
+
+export const CreateContactThunk = createAsyncThunk<
+    PhoneContactInterface,
+    PhoneContactInterface,
+    { state: RootState }
+    >('contacts/CreateContactThunk', async (data, thunkAPI) => {
+    try {
+        await delay(1000)
+        return data
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
     }

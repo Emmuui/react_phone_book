@@ -8,6 +8,7 @@ import NotFoundPage from './pages/not-found-page';
 import useAuth from './features/auth/hooks/use-auth';
 import Layout from './shared/layout/layout';
 import DetailView from './pages/contact-detail';
+import AppRoutes from "./routes";
 import CreateView from "./pages/create-contact";
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
       />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
-  );
+  )
 }
 
 export default App;
