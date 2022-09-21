@@ -57,6 +57,7 @@ export const contactViewSlice = createSlice({
     builder.addCase(CreateContactThunk.fulfilled, (state, action) => {
       state.isLoading = false;
       state.current_contact = action.payload;
+      state.contacts?.push(action.payload)
     });
     builder.addCase(CreateContactThunk.rejected, (state, action) => {
       state.isLoading = false;

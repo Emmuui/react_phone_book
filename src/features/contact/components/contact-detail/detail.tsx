@@ -10,7 +10,7 @@ export const DetailContact = () => {
     const { getDetailContact, current_contact, isLoading, error } = getDetailContactHook();
 
     useEffect(() => {
-        if (!current_contact) {
+        if (!current_contact || current_contact.id != id) {
             getDetailContact(id);
         }
     }, [getDetailContact, current_contact, isLoading, error, id]);

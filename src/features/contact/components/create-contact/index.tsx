@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
 import CreateContactHook from '../../hooks/create-contact';
 const { v4: uuidv4 } = require('uuid');
 import PhoneInput from 'react-phone-number-input';
+import {useAppSelector} from "../../../../store";
+import {useNavigate} from "react-router-dom";
 
 export const CreateContact = () => {
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState<string>('');
+  const [phone, setPhone] = useState('');
   const [first_name, setFirstName] = useState('');
   const [sec_name, setSecName] = useState('');
   const [age, setAge] = useState('');
@@ -14,11 +16,14 @@ export const CreateContact = () => {
   const [address, setAddress] = useState('');
   const { isLoading, createContact } = CreateContactHook();
 
+  const current_contact = useAppSelector(state => state.contacts.current_contact)
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const yyyy = today.getFullYear();
   const today_date = yyyy + '-' + mm + '-' + dd;
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +41,7 @@ export const CreateContact = () => {
       address: address,
       registered: today_date,
     });
+    navigate('/');
   };
 
   return (

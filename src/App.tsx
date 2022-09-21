@@ -8,15 +8,23 @@ import NotFoundPage from './pages/not-found-page';
 import useAuth from './features/auth/hooks/use-auth';
 import Layout from './shared/layout/layout';
 import DetailView from './pages/contact-detail';
-import AppRoutes from "./routes";
-import CreateView from "./pages/create-contact";
+import AppRoutes from './routes';
+import CreateView from './pages/create-contact';
+import getContactsHook from './features/contact/hooks/get-list-contacts';
 
 function App() {
   const { onTokenLogin } = useAuth();
+  const { getListContact, contacts, isLoading, error } = getContactsHook();
 
   useEffect(() => {
     onTokenLogin();
   }, [onTokenLogin]);
+
+  useEffect(() => {
+    if (!contacts && !isLoading && !error) {
+      getListContact();
+    }
+  }, [getListContact, contacts, isLoading, error]);
 
   return (
     <Routes>
@@ -56,7 +64,7 @@ function App() {
       />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
-  )
+  );
 }
 
 export default App;
