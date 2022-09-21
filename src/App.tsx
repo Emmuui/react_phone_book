@@ -8,7 +8,6 @@ import NotFoundPage from './pages/not-found-page';
 import useAuth from './features/auth/hooks/use-auth';
 import Layout from './shared/layout/layout';
 import DetailView from './pages/contact-detail';
-import AppRoutes from './routes';
 import CreateView from './pages/create-contact';
 import getContactsHook from './features/contact/hooks/get-list-contacts';
 
@@ -21,7 +20,7 @@ function App() {
   }, [onTokenLogin]);
 
   useEffect(() => {
-    if (!contacts && !isLoading && !error) {
+    if (contacts.length == 0) {
       getListContact();
     }
   }, [getListContact, contacts, isLoading, error]);

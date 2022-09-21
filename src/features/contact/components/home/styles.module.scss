@@ -29,6 +29,11 @@
   padding-top: 5px;
 }
 
+.contact__info:hover {
+  background-color: #6e6e6e;
+  transition: .3s ease;
+}
+
 .contact__text {
   font-size: 17px;
   font-weight: 500;

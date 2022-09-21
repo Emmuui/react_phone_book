@@ -43,10 +43,29 @@
   background-color: #08c208;
   border: 1px solid black;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .submit__btn:hover {
   cursor: pointer;
   background-color: #108a10;
+  transition: .3s ease;
+}
+
+.contact__button_div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.contact__button_back {
+  background-color: aqua;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.contact__button_back:hover {
+  background-color: #18c4c4;
   transition: .3s ease;
 }

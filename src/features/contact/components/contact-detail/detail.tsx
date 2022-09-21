@@ -3,6 +3,8 @@ import {useEffect} from 'react';
 import getDetailContactHook from "../../hooks/get-detail-contact";
 import {useParams} from "react-router";
 import {ContactDetailForm} from "./index";
+import {Loader} from "../../../../shared/components/loader";
+import {Error} from "../../../../shared/components/error";
 
 export const DetailContact = () => {
     const params = useParams();
@@ -14,5 +16,14 @@ export const DetailContact = () => {
             getDetailContact(id);
         }
     }, [getDetailContact, current_contact, isLoading, error, id]);
+
+    if (isLoading) {
+        return <Loader />;
+    }
+
+    if (error) {
+        return <Error />;
+    }
     return <ContactDetailForm />;
+
 };

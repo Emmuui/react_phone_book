@@ -1,5 +1,5 @@
 export type ContactInitialState = {
-    contacts: Array<PhoneContactInterface> | null;
+    contacts: Array<PhoneContactInterface>;
     current_contact: PhoneContactInterface | null;
     error: null | undefined | string;
     isLoading: boolean;

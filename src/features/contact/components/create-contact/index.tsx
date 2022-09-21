@@ -1,34 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './styles.module.scss';
 import CreateContactHook from '../../hooks/create-contact';
 const { v4: uuidv4 } = require('uuid');
 import PhoneInput from 'react-phone-number-input';
-import {useAppSelector} from "../../../../store";
+import {useAppSelector} from "src/store";
 import {useNavigate} from "react-router-dom";
+import {Loader} from "src/shared/components/loader";
+import {Error} from "src/shared/components/error";
 
-export const CreateContact = () => {
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [first_name, setFirstName] = useState('');
-  const [sec_name, setSecName] = useState('');
-  const [age, setAge] = useState('');
-  const [company, setCompany] = useState('');
-  const [address, setAddress] = useState('');
-  const { isLoading, createContact } = CreateContactHook();
-
+export const CreateContact = ({action}: {action: string}) => {
   const current_contact = useAppSelector(state => state.contacts.current_contact)
+
+  const [id, setId] = useState(current_contact ? current_contact.id : uuidv4());
+  const [email, setEmail] = useState(current_contact ? current_contact.email : '');
+  const [phone, setPhone] = useState(current_contact ? current_contact.phone : '');
+  const [first_name, setFirstName] = useState(current_contact ? current_contact.name.first : '');
+  const [sec_name, setSecName] = useState(current_contact ? current_contact.name.last : '');
+  const [age, setAge] = useState(current_contact ? current_contact.age : '');
+  const [company, setCompany] = useState(current_contact ? current_contact.company : '');
+  const [address, setAddress] = useState(current_contact ? current_contact.address : '');
+  const { isLoading, error, createContact } = CreateContactHook();
+
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const yyyy = today.getFullYear();
   const today_date = yyyy + '-' + mm + '-' + dd;
-
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     createContact({
-      id: uuidv4(),
+      id: id,
       isActive: true,
       age: +age,
       name: {
@@ -44,10 +47,23 @@ export const CreateContact = () => {
     navigate('/');
   };
 
+  const routeBack = () =>{
+    const path = `/`;
+    navigate(path);
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <Error />;
+  }
+
   return (
     <div className={styles.contact__div}>
       <form className={styles.contact__form} onSubmit={e => handleSubmit(e)}>
-        <h1 className={styles.contact__form_h1}>Create new contact</h1>
+        <h1 className={styles.contact__form_h1}>{action} contact</h1>
         <div className={styles.form__contact_name}>
           <input
             className={styles.contact__field}
@@ -104,6 +120,11 @@ export const CreateContact = () => {
           <button disabled={isLoading} type="submit" className={styles.submit__btn}>
             {isLoading ? 'Loading' : 'Submit'}
           </button>
+          <div className={styles.contact__button_div}>
+            <button className={styles.contact__button_back} onClick={routeBack}>
+              Back
+            </button>
+          </div>
         </div>
       </form>
     </div>
