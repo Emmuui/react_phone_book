@@ -54,12 +54,14 @@ export const contactViewSlice = createSlice({
     });
     builder.addCase(CreateContactThunk.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.current_contact = state.current_contact?.id === action.payload.id
-          ? action.payload
-          : state.current_contact;
-      state.contacts = state.contacts.map(content =>
-          content.id === action.payload.id ? action.payload : content
-      );
+      // state.current_contact = state.current_contact?.id === action.payload.id
+      //     ? action.payload
+      //     : state.current_contact;
+      // state.contacts = state.contacts.map(content =>
+      //     content.id === action.payload.id ? action.payload : content
+      // );
+      state.current_contact = action.payload
+      state.contacts = [action.payload, ...state.contacts]
     });
     builder.addCase(CreateContactThunk.rejected, (state, action) => {
       state.isLoading = false;
