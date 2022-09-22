@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { useAppSelector } from 'src/store';
 import { useNavigate } from 'react-router-dom';
-import {CreateContact} from "../create-contact";
+import {CreateContact} from "../create-update-contact";
 
 
 export const ContactDetailForm = () => {

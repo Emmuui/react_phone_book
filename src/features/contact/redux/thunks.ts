@@ -47,3 +47,17 @@ export const CreateContactThunk = createAsyncThunk<
         return thunkAPI.rejectWithValue(error);
     }
 });
+
+
+export const UpdateContactThunk = createAsyncThunk<
+    PhoneContactInterface,
+    PhoneContactInterface,
+    { state: RootState }
+    >('contacts/UpdateContactThunk', async (data, thunkAPI) => {
+    try {
+        await delay(1000)
+        return data
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+    }
+});

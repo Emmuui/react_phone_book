@@ -7,9 +7,14 @@ import {useAppSelector} from "src/store";
 import {useNavigate} from "react-router-dom";
 import {Loader} from "src/shared/components/loader";
 import {Error} from "src/shared/components/error";
+import UpdateContact from "../../hooks/update-contact";
+import UpdateContactHook from "../../hooks/update-contact";
 
 export const CreateContact = ({action}: {action: string}) => {
   const current_contact = useAppSelector(state => state.contacts.current_contact)
+
+  const { isLoading, error, createContact } = CreateContactHook();
+  const { updateContact } = UpdateContactHook();
 
   const [id, setId] = useState(current_contact ? current_contact.id : uuidv4());
   const [email, setEmail] = useState(current_contact ? current_contact.email : '');
@@ -19,7 +24,6 @@ export const CreateContact = ({action}: {action: string}) => {
   const [age, setAge] = useState(current_contact ? current_contact.age : '');
   const [company, setCompany] = useState(current_contact ? current_contact.company : '');
   const [address, setAddress] = useState(current_contact ? current_contact.address : '');
-  const { isLoading, error, createContact } = CreateContactHook();
 
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -30,20 +34,38 @@ export const CreateContact = ({action}: {action: string}) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    createContact({
-      id: id,
-      isActive: true,
-      age: +age,
-      name: {
-        first: first_name,
-        last: sec_name,
-      },
-      company: company,
-      email: email,
-      phone: phone,
-      address: address,
-      registered: today_date,
-    });
+    if (!current_contact) {
+      createContact({
+        id: id,
+        isActive: true,
+        age: +age,
+        name: {
+          first: first_name,
+          last: sec_name,
+        },
+        company: company,
+        email: email,
+        phone: phone,
+        address: address,
+        registered: today_date,
+      });
+    }
+    if (current_contact) {
+      updateContact({
+        id: id,
+        isActive: true,
+        age: +age,
+        name: {
+          first: first_name,
+          last: sec_name,
+        },
+        company: company,
+        email: email,
+        phone: phone,
+        address: address,
+        registered: today_date,
+      });
+    }
     navigate('/');
   };
 

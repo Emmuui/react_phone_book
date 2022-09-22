@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ContactInitialState, PhoneContactInterface } from '../ts/contact';
-import { FetchContacts } from './thunks';
+import {FetchContacts, UpdateContactThunk} from './thunks';
 import { FetchDetailContact } from './thunks';
 import { CreateContactThunk } from './thunks';
+import UpdateContact from "../hooks/update-contact";
 
 const INITIAL_STATE: ContactInitialState = {
   contacts: [],
@@ -54,16 +55,26 @@ export const contactViewSlice = createSlice({
     });
     builder.addCase(CreateContactThunk.fulfilled, (state, action) => {
       state.isLoading = false;
-      // state.current_contact = state.current_contact?.id === action.payload.id
-      //     ? action.payload
-      //     : state.current_contact;
-      // state.contacts = state.contacts.map(content =>
-      //     content.id === action.payload.id ? action.payload : content
-      // );
       state.current_contact = action.payload
       state.contacts = [action.payload, ...state.contacts]
     });
     builder.addCase(CreateContactThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+    builder.addCase(UpdateContactThunk.pending, state => {
+      state.isLoading = true;
+    });
+    builder.addCase(UpdateContactThunk.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.current_contact = state.current_contact?.id === action.payload.id
+          ? action.payload
+          : state.current_contact;
+      state.contacts = state.contacts.map(content =>
+          content.id === action.payload.id ? action.payload : content
+      );
+    });
+    builder.addCase(UpdateContactThunk.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
     });

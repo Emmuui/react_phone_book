@@ -4,7 +4,7 @@ import { ROUTES } from './routes';
 import LoginPage from '../pages/login';
 import HomePage from '../pages/home';
 import DetailView from '../pages/contact-detail';
-// import CreateView from '../pages/create-contact';
+// import CreateView from '../pages/create-update-contact';
 import { Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from './private-route';
 import NotFoundPage from '../pages/not-found-page';
