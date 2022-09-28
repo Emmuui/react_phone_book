@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ContactInitialState, PhoneContactInterface } from '../ts/contact';
-import {FetchContacts, UpdateContactThunk} from './thunks';
+import {deleteContactThunk, FetchContacts, UpdateContactThunk} from './thunks';
 import { FetchDetailContact } from './thunks';
 import { CreateContactThunk } from './thunks';
 import UpdateContact from "../hooks/update-contact";
@@ -77,6 +77,11 @@ export const contactViewSlice = createSlice({
     builder.addCase(UpdateContactThunk.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message;
+    });
+    builder.addCase(deleteContactThunk.fulfilled, (state, action) => {
+      state.contacts = [...action.payload]
+      // state.currentConfiguration =
+      //     state.currentConfiguration?.id === action.payload ? null : state.currentConfiguration;
     });
   },
 });

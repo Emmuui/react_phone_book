@@ -20,7 +20,7 @@ const AppRoutes = (): ReactElement => {
     publicRoutes: [{ path: ROUTES.login, element: <LoginPage /> }],
     privateRoutes: [
       { path: ROUTES.homePage.path, element: <HomePage /> },
-      { path: ROUTES.contactDetail.path, element: <DetailView /> },
+      // { path: ROUTES.contactDetail.path, element: <DetailView /> },
       // { path: ROUTES.contactCreate.path, element: <CreateView /> },
     ],
   };
@@ -31,9 +31,7 @@ const AppRoutes = (): ReactElement => {
       ))}
       {Object(routes.privateRoutes).map((route: RouteType, index: number) => (
         <Route key={index} path={route.path} element={<PrivateRoute />}>
-          <Route key={index} path={route.path} element={<Layout />}>
             <Route path={route.path} element={route.element} />
-          </Route>
         </Route>
       ))}
       <Route path="/*" element={<NotFoundPage />} />

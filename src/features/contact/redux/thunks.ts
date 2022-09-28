@@ -54,7 +54,7 @@ export const UpdateContactThunk = createAsyncThunk<
   PhoneContactInterface,
   PhoneContactInterface,
   { state: RootState }
->('contacts/UpdateContactThunk', async (data, thunkAPI) => {
+>('contacts/updateContactThunk', async (data, thunkAPI) => {
   try {
     await delay(1000);
     return data;
@@ -62,3 +62,18 @@ export const UpdateContactThunk = createAsyncThunk<
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+export const deleteContactThunk = createAsyncThunk<
+    PhoneContactInterface[],
+    string,
+    { state: RootState }
+    >('contacts/deleteContactThunk', async (id, thunkAPI) => {
+  try {
+    await delay(1000);
+    const contacts = thunkAPI.getState().contacts.contacts;
+    return contacts.filter((contact) => contact.id !== id)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+

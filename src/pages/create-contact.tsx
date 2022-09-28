@@ -1,5 +1,5 @@
 import React from 'react';
-import {CreateContact} from "../features/contact/components/create-update-contact";
+import {CreateContact} from "src/features/contact/components/create-update-contact";
 
 export const CreateView = () => {
     const action = 'Create';

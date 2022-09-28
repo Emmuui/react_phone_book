@@ -10,6 +10,8 @@ import Layout from './shared/layout/layout';
 import DetailView from './pages/contact-detail';
 import CreateView from './pages/create-contact';
 import getContactsHook from './features/contact/hooks/get-list-contacts';
+import {ROUTES} from "./routes/routes";
+import AppRoutes from "./routes";
 
 function App() {
   const { onTokenLogin } = useAuth();
@@ -36,7 +38,7 @@ function App() {
         }
       />
       <Route
-        path="/contact/:id"
+        path={ROUTES.dynamic.contact_detail()}
         element={
           <Layout>
             <DetailView />

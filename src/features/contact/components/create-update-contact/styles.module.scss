@@ -69,3 +69,14 @@
   background-color: #18c4c4;
   transition: .3s ease;
 }
+
+.contact__button_delete_display {
+  background-color: darkred;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.contact__button_delete_no_display {
+  display: none;
+}
