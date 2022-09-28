@@ -3,8 +3,8 @@ import {useEffect} from 'react';
 import getDetailContactHook from "../../hooks/get-detail-contact";
 import {useParams} from "react-router";
 import {ContactDetailForm} from "./index";
-import {Loader} from "../../../../shared/components/loader";
-import {Error} from "../../../../shared/components/error";
+import {Loader} from "src/shared/components/loader";
+import {Error} from "src/shared/components/error";
 
 export const DetailContact = () => {
     const params = useParams();

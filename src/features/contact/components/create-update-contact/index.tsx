@@ -1,29 +1,19 @@
-import React, {useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import styles from './styles.module.scss';
 import CreateContactHook from '../../hooks/create-contact';
 const { v4: uuidv4 } = require('uuid');
-import PhoneInput from 'react-phone-number-input';
 import {useAppSelector} from "src/store";
 import {useNavigate} from "react-router-dom";
 import {Loader} from "src/shared/components/loader";
 import {Error} from "src/shared/components/error";
-import UpdateContact from "../../hooks/update-contact";
 import UpdateContactHook from "../../hooks/update-contact";
+import {PhoneContactInterface} from "../../ts/contact";
 
 export const CreateContact = ({action}: {action: string}) => {
   const current_contact = useAppSelector(state => state.contacts.current_contact)
 
   const { isLoading, error, createContact } = CreateContactHook();
   const { updateContact } = UpdateContactHook();
-
-  const [id, setId] = useState(current_contact ? current_contact.id : uuidv4());
-  const [email, setEmail] = useState(current_contact ? current_contact.email : '');
-  const [phone, setPhone] = useState(current_contact ? current_contact.phone : '');
-  const [first_name, setFirstName] = useState(current_contact ? current_contact.name.first : '');
-  const [sec_name, setSecName] = useState(current_contact ? current_contact.name.last : '');
-  const [age, setAge] = useState(current_contact ? current_contact.age : '');
-  const [company, setCompany] = useState(current_contact ? current_contact.company : '');
-  const [address, setAddress] = useState(current_contact ? current_contact.address : '');
 
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -32,42 +22,41 @@ export const CreateContact = ({action}: {action: string}) => {
   const today_date = yyyy + '-' + mm + '-' + dd;
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const initialData = useMemo(() => ({
+    id: uuidv4(),
+    isActive: true,
+    age: 0,
+    name: {
+      first: '',
+      last: '',
+    },
+    company: '',
+    email: '',
+    phone: '',
+    address: '',
+    registered: today_date,
+  }), [today_date])
+
+  const [state, setState] = useState(current_contact || initialData);
+
+  const handleState = useCallback((type: keyof PhoneContactInterface) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState(prevState => ({...prevState, [type]: e.target.value}))
+  }, []);
+
+  const handleName = useCallback((type: keyof PhoneContactInterface['name']) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState(prevState => ({...prevState, name: {...prevState.name, [type]: e.target.value}}))
+  }, []);
+
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    if (!current_contact) {
-      createContact({
-        id: id,
-        isActive: true,
-        age: +age,
-        name: {
-          first: first_name,
-          last: sec_name,
-        },
-        company: company,
-        email: email,
-        phone: phone,
-        address: address,
-        registered: today_date,
-      });
+    if (!current_contact){
+      createContact(state)
     }
     if (current_contact) {
-      updateContact({
-        id: id,
-        isActive: true,
-        age: +age,
-        name: {
-          first: first_name,
-          last: sec_name,
-        },
-        company: company,
-        email: email,
-        phone: phone,
-        address: address,
-        registered: today_date,
-      });
+      updateContact(state)
     }
     navigate('/');
-  };
+  }, [navigate, createContact, updateContact, state, current_contact]);
 
   const routeBack = () =>{
     const path = `/`;
@@ -91,53 +80,53 @@ export const CreateContact = ({action}: {action: string}) => {
             className={styles.contact__field}
             type="text"
             placeholder="Name"
-            value={first_name}
-            onChange={e => setFirstName(e.target.value)}
+            value={state.name.first}
+            onChange={handleName('first')}
             required
           />
           <input
             className={styles.contact__field}
             type="text"
             placeholder="Second name"
-            value={sec_name}
-            onChange={e => setSecName(e.target.value)}
+            value={state.name.last}
+            onChange={handleName('last')}
           />
           <input
             className={styles.contact__field}
             type="text"
             placeholder="Phone"
-            value={phone}
-            onChange={e => setPhone(e.target.value)}
+            value={state.phone}
+            onChange={handleState('phone')}
             required
           />
           <input
             className={styles.contact__field}
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={state.email}
+            onChange={handleState('email')}
             required
           />
           <input
             className={styles.contact__field}
             type="text"
             placeholder="Age"
-            value={age}
-            onChange={e => setAge(e.target.value)}
+            value={state.age}
+            onChange={handleState('age')}
           />
           <input
             className={styles.contact__field}
             type="text"
             placeholder="Company"
-            value={company}
-            onChange={e => setCompany(e.target.value)}
+            value={state.company}
+            onChange={handleState('company')}
           />
           <input
             className={styles.contact__field}
             type="text"
             placeholder="Address"
-            value={address}
-            onChange={e => setAddress(e.target.value)}
+            value={state.address}
+            onChange={handleState('address')}
           />
           <button disabled={isLoading} type="submit" className={styles.submit__btn}>
             {isLoading ? 'Loading' : 'Submit'}
