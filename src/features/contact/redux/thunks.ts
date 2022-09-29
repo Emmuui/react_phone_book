@@ -24,9 +24,9 @@ export const fetchDetailContact = createAsyncThunk<
   { state: RootState }
 >('contacts/fetchDetailContact', async (contactId, thunkAPI) => {
   try {
-    const current_contact = thunkAPI.getState().contacts.current_contact;
-    if (current_contact?.id == contactId) {
-      return current_contact as PhoneContactInterface;
+    const list_contacts = thunkAPI.getState().contacts?.contacts;
+    if (list_contacts) {
+      return list_contacts.find(contact => contact.id == contactId) as PhoneContactInterface;
     } else {
       const res = await fetch('/phones.json');
       const data: PhoneContactInterface[] = await res.json();

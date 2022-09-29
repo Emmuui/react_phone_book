@@ -29,10 +29,10 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/add" element={<CreateView />} />
+        <Route path={ROUTES.contactCreate} element={<CreateView />} />
         <Route path={ROUTES.dynamic.contact_detail()} element={<DetailView />} />
         <Route
-          path="/"
+          path={ROUTES.homePage}
           element={
             <PrivateRoute>
               <HomePage />
@@ -40,7 +40,7 @@ function App() {
           }
         />
         <Route
-          path="/login"
+          path={ROUTES.login}
           element={
             <PublicRoute>
               <LoginPage />

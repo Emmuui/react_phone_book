@@ -1,8 +1,8 @@
 export const ROUTES = {
   login: '/login',
-  homePage: { path: '/' },
+  homePage: '/',
   dynamic: {
     contact_detail: (id = ':id') => `contact/${id}`
   },
-  contactCreate: { path: '/add' },
+  contactCreate: '/add',
 };
