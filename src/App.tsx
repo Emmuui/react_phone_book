@@ -10,8 +10,7 @@ import Layout from './shared/layout/layout';
 import DetailView from './pages/contact-detail';
 import CreateView from './pages/create-contact';
 import getContactsHook from './features/contact/hooks/get-list-contacts';
-import {ROUTES} from "./routes/routes";
-import AppRoutes from "./routes";
+import { ROUTES } from './routes/routes';
 
 function App() {
   const { onTokenLogin } = useAuth();
@@ -28,43 +27,29 @@ function App() {
   }, [getListContact, contacts, isLoading, error]);
 
   return (
-    <Routes>
-      <Route
-        path="/add"
-        element={
-          <Layout>
-            <CreateView />
-          </Layout>
-        }
-      />
-      <Route
-        path={ROUTES.dynamic.contact_detail()}
-        element={
-          <Layout>
-            <DetailView />
-          </Layout>
-        }
-      />
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <Layout>
+    <Layout>
+      <Routes>
+        <Route path="/add" element={<CreateView />} />
+        <Route path={ROUTES.dynamic.contact_detail()} element={<DetailView />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
               <HomePage />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/login"
-        element={
-          <PublicRoute>
-            <LoginPage />
-          </PublicRoute>
-        }
-      />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Layout>
   );
 }
 

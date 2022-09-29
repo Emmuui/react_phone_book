@@ -6,8 +6,8 @@ function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const FetchContacts = createAsyncThunk<PhoneContactInterface[], void>(
-  'contacts/FetchContacts',
+export const fetchContacts = createAsyncThunk<PhoneContactInterface[], void>(
+  'contacts/fetchContacts',
   async function (_, thunkAPI) {
     try {
       const res = await fetch('/phones.json');
@@ -18,11 +18,11 @@ export const FetchContacts = createAsyncThunk<PhoneContactInterface[], void>(
   }
 );
 
-export const FetchDetailContact = createAsyncThunk<
+export const fetchDetailContact = createAsyncThunk<
   PhoneContactInterface,
   string,
   { state: RootState }
->('contacts/FetchDetailContact', async (contactId, thunkAPI) => {
+>('contacts/fetchDetailContact', async (contactId, thunkAPI) => {
   try {
     const current_contact = thunkAPI.getState().contacts.current_contact;
     if (current_contact?.id == contactId) {
@@ -37,11 +37,11 @@ export const FetchDetailContact = createAsyncThunk<
   }
 });
 
-export const CreateContactThunk = createAsyncThunk<
+export const createContactThunk = createAsyncThunk<
   PhoneContactInterface,
   PhoneContactInterface,
   { state: RootState }
->('contacts/CreateContactThunk', async (data, thunkAPI) => {
+>('contacts/createContactThunk', async (data, thunkAPI) => {
   try {
     await delay(1000);
     return data;
@@ -50,7 +50,7 @@ export const CreateContactThunk = createAsyncThunk<
   }
 });
 
-export const UpdateContactThunk = createAsyncThunk<
+export const updateContactThunk = createAsyncThunk<
   PhoneContactInterface,
   PhoneContactInterface,
   { state: RootState }
