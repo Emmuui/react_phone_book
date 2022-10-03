@@ -81,7 +81,7 @@ export const contactViewSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(deleteContactThunk.fulfilled, (state, action) => {
-      state.contacts = [...action.payload];
+      state.contacts = state.contacts.filter(contacts => contacts.id != action.payload.id)
     });
   },
 });

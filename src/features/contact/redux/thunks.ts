@@ -64,14 +64,14 @@ export const updateContactThunk = createAsyncThunk<
 });
 
 export const deleteContactThunk = createAsyncThunk<
-    PhoneContactInterface[],
+    PhoneContactInterface,
     string,
     { state: RootState }
     >('contacts/deleteContactThunk', async (id, thunkAPI) => {
   try {
     await delay(1000);
     const contacts = thunkAPI.getState().contacts.contacts;
-    return contacts.filter((contact) => contact.id !== id)
+    return contacts.find(contact => contact.id == id) as PhoneContactInterface
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
