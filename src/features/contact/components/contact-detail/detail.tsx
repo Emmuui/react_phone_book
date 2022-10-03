@@ -25,5 +25,4 @@ export const DetailContact = () => {
         return <Error />;
     }
     return <ContactDetailForm />;
-
 };
